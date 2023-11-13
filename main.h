@@ -3,7 +3,7 @@
 int _printf(const char *format, ...);
 int _putchar(char c);
 int printf_char(va_list arg);
-int printf_str(va list arg);
+int printf_str(va_list arg);
 int _strlen(char *s);
 int _strlenc(const char *s);
 int print_37(void);

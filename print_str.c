@@ -1,4 +1,5 @@
 #include "main.h"
+#include <stdarg.h>
 
 int printf_str(va_list arg)
 {

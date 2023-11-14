@@ -1,7 +1,7 @@
 #include "main.h"
 #include <stdarg.h>
 
-int printf_str(va_list arg)
+int print_str(va_list arg)
 {
 	char *str;
 	int i;

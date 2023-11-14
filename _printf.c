@@ -1,44 +1,65 @@
 #include "main.h"
-#include <stddef.h>
-#include <stdio.h>
+#include <stdarg.h>
+#include <unistd.h>
+
 /**
- * _printf - is a function that selects the correct function to print.
- * @format: identifier to look for.
- * Return: the length of the string.
- */
-int _printf(const char * const format, ...)
+* _printf - main function to print
+* format: first arguement
+* return: number of characters printed
+*/
+
+int _printf(const char *format, ...)
 {
-	convert x[] = {
-		{"%s", print_str}, {"%c", print_char},
-		{"%%", print_37},
-		{"%i", print_i}, {"%d", print_d}
-	};
-
-	va_list arg;
-	int a = 0, j,  length = 0;
-
-	va_start (arg, format);
-	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
-		return (-1);
-
-Here:
-	while (format[a] != '\0')
+	int char_print = 0;
+	va_list args;
+	
+	if (format == NULL)
 	{
-		j = 13;
-		while (j >= 0)
-		{
-			if (x[j].cp[0] == format[a] && x[j].cp[1] == format[a + 1])
-			{
-				length += x[j].function(arg);
-				a = a + 2;
-				goto Here;
-			}
-			j--;
-		}
-		_putchar(format[a]);
-		length++;
-		a++;
+		return (-1);
 	}
-	va_end(arg);
-	return (length);
+	va_start (args, format);
+
+	while (*format)
+	{
+		if (*format != '%')
+		{
+			write(1, format, 1);
+			char_print++;
+		}
+		else /* if format is the % sign */
+		{
+			format++; /* skip & sign */
+			if (*format == '\0')
+			{	 
+				break;
+			}
+			if (*format == '%')
+			{
+				write(1, format, 1); 
+				char_print++;
+			}
+			else if (*format == 'c')
+			{
+				char c = (char)va_arg (args, int);
+				write(1, &c, 1);
+				char_print++;
+			}
+			else if (*format == 's')
+			{
+				char *str = va_arg(args, char*);
+				int str_len = 0;
+
+				while (str[str_len] != '\0')
+					str_len++;
+	
+				write(1, str, str_len);
+				char_print += str_len;
+			}
+		}
+		
+		format++;
+	}
+	
+va_end(args);
+return (char_print);	
 }

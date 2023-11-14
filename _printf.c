@@ -3,7 +3,7 @@
 #include <unistd.h>
 
 /**
-* _printf - main function to print
+* _printf - function to print
 * format: first arguement
 * return: number of characters printed
 */
@@ -60,6 +60,6 @@ int _printf(const char *format, ...)
 		format++;
 	}
 	
-va_end(args);
-return (char_print);	
+	va_end(args);
+	return (char_print);	
 }

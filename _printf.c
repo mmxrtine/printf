@@ -56,6 +56,38 @@ int _printf(const char *format, ...)
 				write(1, str, str_len);
 				char_print += str_len;
 			}
+			else if (*format == 'd')
+			{
+				int num = va_arg(args, int);
+                		int num_len = 0;
+                		int temp = num;
+
+				if (temp <= 0) 
+				{
+                    			num_len = 1;
+				}
+			
+				while (temp != 0)
+				{
+					temp /= 10;
+					num_len++;
+				}	
+		
+				if (num < 0)
+				{
+					write(1, "-", 1);
+					char_print++;
+					num = -num;
+				}
+
+				while (num_len > 0)
+				{
+					int digit = (num / num_len) % 10 + '0';
+					write (1, &digit, 1);
+					char_print++;
+					num_len--;
+				}
+			}
 		}
 		
 		format++;
